@@ -81,17 +81,18 @@ public class vRADeploymentBuildStep  extends Builder {
 		for (PluginParam param : params) {
 
 
-				// Resolve any build variables included in the request paramaters.
-			List<RequestParam> rparamResolved = new ArrayList<RequestParam>();;
+		    // Resolve any build variables included in the request parameters.
+			List<RequestParam> rparamResolved = new ArrayList<RequestParam>();
 
-				if ( ! (null == param.getRequestParams()) || param.getRequestParams().isEmpty()) {
+			if ( (null != param.getRequestParams()) && !param.getRequestParams().isEmpty() ) {
 
 
-					for (RequestParam rparam : param.getRequestParams()) {
-						String rparamString = helper.replaceBuildParamWithValue(rparam.getRequestParam().toString());
-						rparamResolved.add(new RequestParam(rparamString));
-					}
-				}
+                for (RequestParam rparam : param.getRequestParams()) {
+                    String rparamString = helper.replaceBuildParamWithValue(rparam.getRequestParam().toString());
+                    rparamResolved.add(new RequestParam(rparamString));
+                }
+
+			}
 
 			// Resolve any environment variables in the parameters
 			PluginParam fparam = new PluginParam(helper.replaceBuildParamWithValue(param.getServerUrl()),

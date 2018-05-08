@@ -53,13 +53,8 @@ public class Request  {
         this.params = params;
         this.logger = logger;
 
-
-        try {
-            this.restclient  = new RestClient(params);
-            this.AUTH_TOKEN = restclient.AuthToken();
-        }catch ( IOException e) {
-            e.printStackTrace();
-        }
+        this.restclient  = new RestClient(params);
+        this.AUTH_TOKEN = restclient.AuthToken();
 
         String catalogServiceApiUrl = params.getServerUrl().replaceFirst("/+$", "")
                                                 + "/catalog-service/api/";
@@ -113,18 +108,14 @@ public class Request  {
 
     }
 
-    public Request(PrintStream logger, String vRA_URL, String userName, String password, String tenant ) {
+    public Request(PrintStream logger, String vRA_URL, String userName, String password, String tenant ) throws IOException {
         // Constructor for blueprint requests
 
         this.logger = logger;
 
+        this.restclient  = new RestClient(vRA_URL,userName,password,tenant);
+        this.AUTH_TOKEN = restclient.AuthToken();
 
-        try {
-            this.restclient  = new RestClient(vRA_URL,userName,password,tenant);
-            this.AUTH_TOKEN = restclient.AuthToken();
-        }catch ( IOException e) {
-            e.printStackTrace();
-        }
 
         String catalogServiceApiUrl = vRA_URL.replaceFirst("/+$", "") + "/catalog-service/api/";
 

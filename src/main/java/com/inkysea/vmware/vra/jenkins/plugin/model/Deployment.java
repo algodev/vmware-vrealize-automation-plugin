@@ -243,7 +243,30 @@ public class Deployment {
                     machineDataList.add(jsonData.getAsJsonObject().get("Component").getAsString());
                     machineDataList.add(content.getAsJsonObject().get("name").getAsString());
                     machineDataList.add(jsonNetworkData.getAsJsonObject().get("NETWORK_NAME").getAsString());
-                    machineDataList.add(jsonNetworkData.getAsJsonObject().get("NETWORK_ADDRESS").getAsString());
+
+                    // Some blueprint configurations don't provide NETWORK_ADDRESS
+                    if (jsonNetworkData.getAsJsonObject().get("NETWORK_ADDRESS") != null) {
+
+                        machineDataList.add(jsonNetworkData.getAsJsonObject().get("NETWORK_ADDRESS").getAsString());
+
+                    } else {
+
+                        // possible alternative location for ip address
+                        if (jsonData.getAsJsonObject().get("ip_address") != null) {
+
+                            machineDataList.add(jsonData.getAsJsonObject().get("ip_address").getAsString());
+
+                        } else {
+
+                            machineDataList.add(""); // give up, but at least this won't crash the plug-in when it tries to access this
+                                                     // machineDataList array index later see getDeploymentComponents() where it expects index #4:
+                                                     // [map.put(networkMachinePrefix + "_IP" + ipCounter, machine.get(4).toString().toUpperCase());]
+                                                     //
+                                                     // Doing this is valid in cases where you don't need or want the ip address of a deployment.
+
+                        }
+
+                    }
 
                     machineList.add(machineDataList);
 
