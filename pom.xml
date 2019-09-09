@@ -165,9 +165,15 @@
 	        <artifactId>guava</artifactId>
 	        <version>18.0</version>
         </dependency>
+           <dependency>
+               <groupId>org.junit.jupiter</groupId>
+               <artifactId>junit-jupiter</artifactId>
+               <version>RELEASE</version>
+               <scope>compile</scope>
+           </dependency>
 
 
-    </dependencies>
+       </dependencies>
     
         <build>
         <plugins>
@@ -213,7 +219,17 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+	    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Jenkins-ClassFilter-Whitelisted>true</Jenkins-ClassFilter-Whitelisted>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

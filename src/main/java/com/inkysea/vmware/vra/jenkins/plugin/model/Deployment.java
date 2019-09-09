@@ -23,15 +23,15 @@ public class Deployment {
     private DestroyParam dParams;
 
     private Request request;
-    private PrintStream logger;
+    private transient PrintStream logger;
     private String DESTROY_TEMPLATE_URL;
     private String DESTROY_URL;
     private String deploymentName;
     private String parentResourceID;
-    private JsonObject deploymentResources;
+    private transient JsonObject deploymentResources;
     private String businessGroupId;
     private String tenantId;
-    public JsonObject bluePrintTemplate;
+    public transient JsonObject bluePrintTemplate;
     private String cataologID;
     private String subtenantRef;
 

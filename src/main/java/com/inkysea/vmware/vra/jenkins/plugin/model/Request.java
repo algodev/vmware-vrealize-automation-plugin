@@ -39,10 +39,10 @@ public class Request  {
 
 
     private String AUTH_TOKEN = "";
-    private PrintStream logger;
+    private transient PrintStream logger;
     private String catalogId;
     public String requestID;
-    public JsonObject bluePrintTemplate;
+    public transient JsonObject bluePrintTemplate;
 
 
 
